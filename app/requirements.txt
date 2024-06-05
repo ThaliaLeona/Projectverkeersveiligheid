@@ -1,0 +1,7 @@
+Flask
+geopandas
+pandas
+folium
+geopy
+decimal
+os

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kaartweergave</title>
+    <!-- KAARTSTYLE -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <!-- KAARTFUNCTIONALITEIT  -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <form method="POST">
+        <input type="text" name="address" placeholder="Uw adres">
+        <button type="submit">Show Map</button>
+    </form>
+    <div id="map" style="height: 400px;"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // FORM EN MAP DIV SELECT
+        const form = document.querySelector('form');
+        const mapDiv = document.getElementById('map');
+
+        // EVENT LISTENER LINKEN AAN FORM VR SUBMIT EVENT
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); 
+            // ADRESWAARDE UIT INVOERVELD OPHALEN
+            const address = document.querySelector('[name="address"]').value;
+
+            // POST-VERZOEK NR SERVER M INGEV THUISADRES
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address: address }) 
+            })
+            .then(response => response.text()) 
+            .then(mapHtml => {
+                // INH MAPDIV VERVANGEN M ONTV HTML
+                mapDiv.innerHTML = mapHtml; 
+            });
+        });
+    </script>
+</body>
+</html>
